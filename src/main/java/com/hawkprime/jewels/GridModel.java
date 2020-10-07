@@ -39,6 +39,10 @@ public class GridModel {
         }
     }
 
+    public char getCell(int x, int y) {
+        return cells.get(x).get(y).charAt(0);
+    }
+
     public char[] getCells() {
         char[] grid = new char[width * height];
         for (int x = 0; x < width; ++x) {
@@ -116,9 +120,7 @@ public class GridModel {
     }
 
     private String generateCellValue() {
-        char firstChar = 'a';
-        char lastChar = (char) (firstChar + jewelCount);
-        return String.valueOf((char) (random.nextInt(lastChar - firstChar + 1) + firstChar));
+        return String.valueOf((char) (random.nextInt(jewelCount + 1)));
     }
 
     public char[] removeCells(List<Point> cellsToRemove) {
