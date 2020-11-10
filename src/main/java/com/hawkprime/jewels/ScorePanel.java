@@ -1,6 +1,5 @@
 package com.hawkprime.jewels;
 
-import sun.java2d.pipe.DrawImage;
 
 import javax.swing.*;
 import java.awt.*;

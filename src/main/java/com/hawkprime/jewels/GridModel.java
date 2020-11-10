@@ -1,7 +1,5 @@
 package com.hawkprime.jewels;
 
-import com.sun.media.jfxmedia.events.PlayerEvent;
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
