@@ -39,6 +39,7 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
         // set panel size
         setPreferredSize(new Dimension(GRID_WIDTH * JEWEL_WIDTH, GRID_HEIGHT * JEWEL_HEIGHT));
+        setBackground(Color.DARK_GRAY);
 
         // add mouse listeners
         addMouseListener(this);
@@ -156,6 +157,8 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
             // then remove the list of matching cells from the grid
             model.removeCells(model.checkAdjacentCells(target.x, target.y));
             model.removeCells(model.checkAdjacentCells(source.x, source.y));
+            Player.addMove(1);
+            ScorePanel.setHighScore();
         }
 
         // clear the moving and target jewels

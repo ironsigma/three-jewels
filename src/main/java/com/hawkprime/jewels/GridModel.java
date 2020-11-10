@@ -1,5 +1,7 @@
 package com.hawkprime.jewels;
 
+import com.sun.media.jfxmedia.events.PlayerEvent;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,9 @@ public class GridModel {
     private int height;
     private int jewelCount;
     private Random random;
+    private int removedCells;
+
+    Player player = new Player();
 
     public GridModel(int width, int height, int jewelCount) {
         this.width = width;
@@ -124,12 +129,26 @@ public class GridModel {
     }
 
     public char[] removeCells(List<Point> cellsToRemove) {
+        removedCells = 0;
         cellsToRemove.sort((a, b) -> a.y - b.y);
         for (Point cell : cellsToRemove) {
             List<String> col = cells.get(cell.x);
             col.remove(cell.y);
             col.add(0, generateCellValue());
+            removedCells++;
         }
+        // if player remove 3 cells add 100point to his score
+        if (removedCells == 3){
+            player.setScore(100);
+        }
+        // if he remove more then 3 add 100 points to player and for every other cell add 50 points
+        else if (removedCells > 3){
+            player.setScore(100);
+            for (int i = 3; i < removedCells; i++){
+                player.setScore(50);
+            }
+        }
+
         return getCells();
     }
 }
