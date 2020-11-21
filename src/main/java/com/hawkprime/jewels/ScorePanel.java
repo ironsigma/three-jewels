@@ -1,26 +1,32 @@
 package com.hawkprime.jewels;
 
 
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+
+import java.util.prefs.Preferences;
+
 
 public class ScorePanel extends JPanel implements ActionListener{
     private static final int HEIGHT = 70;
     private static final int WIDTH = 8 * 120;
     private Font scoreFont;
 
-    private static String saveDataPath;
     private static String fileName = "BestScore";
     private static int highScore = 0;
+
+    private static Preferences preferences;
+
 
     public ScorePanel(){
         scoreFont = new Font("IMMORTAL",Font.BOLD,30);
 
         try{
-            saveDataPath = ScorePanel.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            preferences = Preferences.userNodeForPackage(com.hawkprime.jewels.ScorePanel.class);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -53,29 +59,9 @@ public class ScorePanel extends JPanel implements ActionListener{
         repaint();
     }
 
-    private void createSaveData(){
-        try{
-            File file = new File(saveDataPath, fileName);
-
-            FileWriter output = new FileWriter(file);
-            BufferedWriter writer = new BufferedWriter(output);
-            writer.write(""+0);
-            writer.close();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private void loadHighScore(){
         try{
-            File file = new File(saveDataPath, fileName);
-            if(!file.isFile()){
-                createSaveData();
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            highScore = Integer.parseInt(reader.readLine());
-            reader.close();
+            highScore = preferences.getInt("BestScore" , 0);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -83,22 +69,17 @@ public class ScorePanel extends JPanel implements ActionListener{
     }
 
     public static void setHighScore(){
-        FileWriter output = null;
 
         try{
-            File file = new File(saveDataPath,fileName);
-            output = new FileWriter(file);
-            BufferedWriter writer = new BufferedWriter(output);
-
             if(Player.getScore() >= highScore){
-                writer.write(""+Player.getScore());
+                preferences.putInt("BestScore", Player.getScore());
             }
-
-            writer.close();
         }
         catch (Exception e){
             e.printStackTrace();
         }
+
+
     }
 }
 
