@@ -18,16 +18,13 @@ public class JewelsApp extends JFrame {
         setTitle("Jewels");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-
         add(scorePanel, BorderLayout.PAGE_START);
-
         add(boardPanel, BorderLayout.CENTER);
 
         pack();
         setResizable(false);
         setVisible(true);
         setLocationRelativeTo(null);
-
     }
 
     public static void main(String[] args) {
